@@ -5,7 +5,22 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    int ages[] = {16, 14, 24, 35, 19, 28, 27};
+    int n = 42;
+    int* p = nullptr;
+    p = ages;
+    int* n_location = &n;
+
+    for (auto age : ages) {
+        std::cout << age << std::endl;
+    }
+    std::cout << "n with value: " << *n_location << ", is located at " << n_location << std::endl;
+    
+    std::cout << *p << std::endl;    
+    p++;
+    std::cout << *p << std::endl;
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
