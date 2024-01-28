@@ -1,7 +1,11 @@
-// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <string>
+
+struct student {
+    int birthyear;
+    float height;
+    std::string name;
+};
 
 int main()
 {
@@ -10,6 +14,18 @@ int main()
     int* p = nullptr;
     p = ages;
     int* n_location = &n;
+
+    struct student students[] = { 
+        {1988, 1.65, "Hector Trujillo"},
+        {1996, 1.65, "Leonardo Trujillo"},
+        {1997, 1.60, "Petra Diaz"},
+        {1995, 1.56, "Katherin Mar"},
+    };
+
+    for  (auto &s : students)
+    {
+        std::cout << "Name: " << s.name << ", YOB: " << s.birthyear << ", Height: " << s.height << std::endl;
+    }
 
     for (auto age : ages) {
         std::cout << age << std::endl;
