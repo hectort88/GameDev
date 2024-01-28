@@ -6,7 +6,7 @@ Shape::~Shape()
 	std::cout << "Shape with width: " << m_width << " and length: " << m_length << " destroyed" << std::endl;
 }
 
-int Shape::area()
+int Shape::area() const
 {
 	return m_width * m_length;
 }

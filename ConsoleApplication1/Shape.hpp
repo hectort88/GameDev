@@ -1,4 +1,3 @@
-#include <iostream>
 #ifndef SHAPE_H
 #define SHAPE_H
 class Shape
@@ -9,7 +8,7 @@ public:
 	Shape(int length, int width) : m_length(length), m_width(width) 
 	{}
 	~Shape();
-	int area();
+	int area() const;
 	void print();
 };
 

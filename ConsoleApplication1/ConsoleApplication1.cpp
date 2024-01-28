@@ -17,10 +17,10 @@ int main()
     int* n_location = &n;
 
     struct student students[] = { 
-        {1988, 1.65, "Hector Trujillo"},
-        {1996, 1.65, "Leonardo Trujillo"},
-        {1997, 1.60, "Petra Diaz"},
-        {1995, 1.56, "Katherin Mar"},
+        {1988, 1.65, "Jeffrey Arroyo"},
+        {1996, 1.65, "Madelyn Garza"},
+        {1997, 1.60, "Colette Griffith"},
+        {1995, 1.56, "Lilia Crawford"},
     };
 
     for  (auto &s : students)
