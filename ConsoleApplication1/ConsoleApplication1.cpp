@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "Shape.hpp"
 
 struct student {
     int birthyear;
@@ -26,6 +27,11 @@ int main()
     {
         std::cout << "Name: " << s.name << ", YOB: " << s.birthyear << ", Height: " << s.height << std::endl;
     }
+
+    Shape square(8, 8);
+    Shape rectangle(12, 20);
+    square.print();
+    rectangle.print();
 
     for (auto age : ages) {
         std::cout << age << std::endl;
