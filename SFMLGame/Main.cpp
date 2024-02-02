@@ -14,14 +14,14 @@ sf::Sprite heroSprite;
 sf::Vector2f playerPosition;
 bool playerMoving = false;
 
-void draw()
+static void draw()
 {
 	window.draw(skySprite);
 	window.draw(bgSprite);
 	window.draw(heroSprite);
 }
 
-void init()
+static void init()
 {
 	skyTexture.loadFromFile("Assets/graphics/sky.png");
 	skySprite.setTexture(skyTexture);
@@ -33,12 +33,12 @@ void init()
 	heroSprite.setOrigin(heroTexture.getSize().x / 2, heroTexture.getSize().y / 2);
 }
 
-void update(float dt)
+static void update(float dt)
 {
 	if (playerMoving) heroSprite.move(100.0f * dt, 0);
 }
 
-void updateInput()
+static void updateInput()
 {
 	sf::Event event;
 	while (window.pollEvent(event))
