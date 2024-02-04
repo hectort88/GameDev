@@ -1,24 +1,24 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "Hero.hpp"
 
 sf::Vector2f viewSize(1024, 768);
 sf::VideoMode vm(viewSize.x, viewSize.y);
-sf::RenderWindow window(vm, "Hello SFML!!!", sf::Style::Default);
+sf::RenderWindow window(vm, "Hello SFML Game!!!", sf::Style::Default);
 
+sf::Vector2f playerPosition;
+bool playerMoving = false;
 sf::Sprite skySprite;
 sf::Texture skyTexture;
 sf::Sprite bgSprite;
 sf::Texture bgTexture;
-sf::Texture heroTexture;
-sf::Sprite heroSprite;
-
-sf::Vector2f playerPosition;
-bool playerMoving = false;
+Hero hero;
 
 static void draw()
 {
 	window.draw(skySprite);
-	window.draw(bgSprite);
-	window.draw(heroSprite);
+	window.draw(bgSprite);	
+	window.draw(hero.getSprite());
 }
 
 static void init()
@@ -27,15 +27,12 @@ static void init()
 	skySprite.setTexture(skyTexture);
 	bgTexture.loadFromFile("Assets/graphics/bg.png");
 	bgSprite.setTexture(bgTexture);
-	heroTexture.loadFromFile("Assets/graphics/hero.png");
-	heroSprite.setTexture(heroTexture);
-	heroSprite.setPosition(sf::Vector2f(0, viewSize.y / 2));
-	heroSprite.setOrigin(heroTexture.getSize().x / 2, heroTexture.getSize().y / 2);
+	hero.init("Assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
 }
 
 static void update(float dt)
 {
-	if (playerMoving) heroSprite.move(100.0f * dt, 0);
+	hero.update(dt);
 }
 
 static void updateInput()
@@ -44,13 +41,8 @@ static void updateInput()
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Right) {
-				playerMoving = true;
-			}
-		}
-		if (event.type == sf::Event::KeyReleased) {
-			if (event.key.code == sf::Keyboard::Right) {
-				playerMoving = false;
+			if (event.key.code == sf::Keyboard::Up) {
+				hero.jump(750.0f);
 			}
 		}
 		if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
@@ -61,6 +53,8 @@ static void updateInput()
 int main()
 {
 	sf::Clock clock;
+	window.setFramerateLimit(60);
+
 	init();	
 	
 	while (window.isOpen())
