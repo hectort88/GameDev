@@ -7,7 +7,6 @@ private:
 	sf::Vector2f m_position;
 
 	int jumpCount = 0;
-	float m_force = 0.0f;
 	float m_mass;
 	float m_velocity;
 	const float m_gravity = 9.80f;
