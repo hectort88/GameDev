@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Hero.hpp"
+#include "Enemy.hpp"
 
 sf::Vector2f viewSize(1024, 768);
 sf::VideoMode vm(viewSize.x, viewSize.y);
@@ -13,6 +14,7 @@ sf::Texture skyTexture;
 sf::Sprite bgSprite;
 sf::Texture bgTexture;
 Hero hero;
+std::vector<Enemy*> enemies;
 
 static void draw()
 {

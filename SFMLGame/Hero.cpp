@@ -1,3 +1,6 @@
+#ifndef HERO_H
+#define HERO_H
+
 #include "Hero.hpp"
 
 Hero::Hero()
@@ -50,3 +53,5 @@ sf::Sprite Hero::getSprite()
 {
 	return m_sprite;
 }
+
+#endif // !HERO_H
