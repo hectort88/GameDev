@@ -144,10 +144,12 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Rocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Hero.hpp" />
+    <ClInclude Include="Rocket.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

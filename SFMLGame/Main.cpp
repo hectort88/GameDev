@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Hero.hpp"
 #include "Enemy.hpp"
+#include "Rocket.hpp"
 
 sf::Vector2f viewSize(1024, 768);
 sf::VideoMode vm(viewSize.x, viewSize.y);
@@ -15,10 +16,11 @@ sf::Sprite bgSprite;
 sf::Texture bgTexture;
 Hero hero;
 std::vector<Enemy*> enemies;
+std::vector<Rocket*> rockets;
 float currentTime;
 float prevTime = 0.0f;
 
-void spawnEnemy()
+static void spawnEnemy()
 {
 	int randLoc = rand() % 3;
 	sf::Vector2f enemyPos;
@@ -47,6 +49,16 @@ void spawnEnemy()
 	enemies.push_back(enemy);
 }
 
+static void shoot()
+{
+	Rocket* rocket = new Rocket();
+	auto position = hero.getSprite().getPosition();
+	position.y += 16;
+	position.x += 40;
+	rocket->init("Assets/graphics/rocket.png", position, 600.0f);
+	rockets.push_back(rocket);
+}
+
 static void draw()
 {
 	window.draw(skySprite);
@@ -56,15 +68,19 @@ static void draw()
 	for (Enemy *enemy: enemies) {
 		window.draw(enemy->getSprite());
 	}
+
+	for (Rocket *rocket : rockets)
+	{
+		window.draw(rocket->getSprite());
+	}
 }
 
 static void init()
 {
-	skyTexture.loadFromFile("Assets/graphics/sky.png");
 	skySprite.setTexture(skyTexture);
-	bgTexture.loadFromFile("Assets/graphics/bg.png");
+	bgTexture.loadFromFile("Assets/graphics/bg.jpg");
 	bgSprite.setTexture(bgTexture);
-	hero.init("Assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
+	hero.init("Assets/graphics/hero3.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
 	srand((int)time(0));
 }
 
@@ -77,7 +93,7 @@ static void update(float dt)
 		prevTime = currentTime;
 	}
 
-	//Uupdate Enemies
+	// Update Enemies
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		Enemy* enemy = enemies[i];
@@ -88,6 +104,18 @@ static void update(float dt)
 			delete(enemy);
 		}
 	}
+
+	// Update Rockets
+	for (int i = 0; i < rockets.size(); i++)
+	{
+		Rocket* rocket = rockets[i];
+		rocket->update(dt);
+		if (rocket->getSprite().getPosition().x > viewSize.x)
+		{
+			rockets.erase(rockets.begin() + i);
+			delete(rocket);
+		}
+	}
 }
 
 static void updateInput()
@@ -96,8 +124,11 @@ static void updateInput()
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Up) {
+			if (event.key.code == sf::Keyboard::W) {
 				hero.jump(750.0f);
+			}
+			if (event.key.code == sf::Keyboard::Space) {
+				shoot();
 			}
 		}
 		if (event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)

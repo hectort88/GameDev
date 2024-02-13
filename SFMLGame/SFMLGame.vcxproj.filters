@@ -24,12 +24,18 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
