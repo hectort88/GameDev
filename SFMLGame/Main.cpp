@@ -15,12 +15,47 @@ sf::Sprite bgSprite;
 sf::Texture bgTexture;
 Hero hero;
 std::vector<Enemy*> enemies;
+float currentTime;
+float prevTime = 0.0f;
+
+void spawnEnemy()
+{
+	int randLoc = rand() % 3;
+	sf::Vector2f enemyPos;
+	float speed;
+	switch (randLoc)
+	{
+	case 0:
+		enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.75f);
+		speed = -400;
+		break;
+	case 1:
+		enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.60f);
+		speed = -550;
+		break;
+	case 2:
+		enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.40f);
+		speed = -650;
+		break;
+	default:
+		std::cerr << "Incorrect Value" << std::endl;
+		return;
+	}
+
+	Enemy* enemy = new Enemy();
+	enemy->init("Assets/graphics/enemy.png", enemyPos, speed);
+	enemies.push_back(enemy);
+}
 
 static void draw()
 {
 	window.draw(skySprite);
 	window.draw(bgSprite);	
 	window.draw(hero.getSprite());
+
+	for (Enemy *enemy: enemies) {
+		window.draw(enemy->getSprite());
+	}
 }
 
 static void init()
@@ -30,11 +65,29 @@ static void init()
 	bgTexture.loadFromFile("Assets/graphics/bg.png");
 	bgSprite.setTexture(bgTexture);
 	hero.init("Assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
+	srand((int)time(0));
 }
 
 static void update(float dt)
 {
 	hero.update(dt);
+	currentTime += dt;
+	if (currentTime > prevTime + 1.125f) {
+		spawnEnemy();
+		prevTime = currentTime;
+	}
+
+	//Uupdate Enemies
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		Enemy* enemy = enemies[i];
+		enemy->update(dt);
+		if (enemy->getSprite().getPosition().x < 0)
+		{
+			enemies.erase(enemies.begin() + i);
+			delete(enemy);
+		}
+	}
 }
 
 static void updateInput()
