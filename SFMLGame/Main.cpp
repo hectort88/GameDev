@@ -59,6 +59,14 @@ static void shoot()
 	rockets.push_back(rocket);
 }
 
+static bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2)
+{
+	auto shape1 = sprite1.getGlobalBounds();
+	auto shape2 = sprite2.getGlobalBounds();
+
+	return shape1.intersects(shape2);
+}
+
 static void draw()
 {
 	window.draw(skySprite);
@@ -93,6 +101,26 @@ static void update(float dt)
 		prevTime = currentTime;
 	}
 
+	// Check Collision
+	for (size_t idx_rocket = 0; idx_rocket < rockets.size(); idx_rocket++)
+	{
+		for (size_t idx_enemy = 0; idx_enemy < enemies.size(); idx_enemy++)
+		{
+			Rocket* rocket = rockets[idx_rocket];
+			Enemy* enemy = enemies[idx_enemy];
+
+			if (checkCollision(rocket->getSprite(), enemy->getSprite()))
+			{
+				std::cout << "Rocket " << idx_rocket << " killed enemy " << idx_enemy << "\n";
+				rockets.erase(rockets.begin() + idx_rocket);
+				enemies.erase(enemies.begin() + idx_enemy);
+
+				delete(rocket);
+				delete(enemy);
+			}
+		}
+	}
+
 	// Update Enemies
 	for (int i = 0; i < enemies.size(); i++)
 	{
@@ -116,6 +144,7 @@ static void update(float dt)
 			delete(rocket);
 		}
 	}
+	
 }
 
 static void updateInput()
